@@ -29,8 +29,8 @@ npm test
 
 # Ver informe de cobertura
 npm run test:coverage
-
-# 🛠️ Tecnologías utilizadas
+ ```
+## 🛠️ Tecnologías utilizadas
 
 *   **Runtime**: Node.js 20
 *   **Testing**: Jest
@@ -38,6 +38,6 @@ npm run test:coverage
 *   **Empaquetado**: @yao-pkg/pkg
 *   **Automatización**: GitHub Actions
 
-# 📄 Licencia
+## 📄 Licencia
 
 Este proyecto es para fines educativos bajo la licencia MIT.
