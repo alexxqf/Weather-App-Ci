@@ -1,6 +1,6 @@
 # Weather App - CI/CD 🌍
 
-Aplicación de consola para consultar el tiempo (Zarautz) desarrollada en Node.js 20. Este proyecto implementa un pipeline completo de Integración y Despliegue Continuo (CI/CD) con GitHub Actions.
+Aplicación de consola para consultar el tiempo (Vigo) desarrollada en Node.js 20. Este proyecto implementa un pipeline completo de Integración y Despliegue Continuo (CI/CD) con GitHub Actions.
 
 ## 🚀 Estado del proyecto
 
