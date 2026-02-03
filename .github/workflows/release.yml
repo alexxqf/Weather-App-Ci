@@ -1,4 +1,31 @@
-build:
+name: Release & Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+
+  build:
     name: Build Multi-platform Executables
     needs: test
     runs-on: ubuntu-latest
@@ -12,24 +39,15 @@ build:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      
-      # Añadimos esto para asegurar que la carpeta existe (por si acaso)
       - name: Create dist directory
         run: mkdir -p dist
-
       - name: Build executables
         run: npm run build
-
-      # DEBUG: Añadimos este paso para ver en la consola qué archivos se han creado realmente
       - name: List files (Debug)
         run: ls -R dist
-
-      # Usamos asteriscos para que no falle por el nombre exacto
       - name: Set executable permissions
         run: |
-          chmod +x dist/*-linux* || true
-          chmod +x dist/*-macos* || true
-      
+          find dist/ -type f -not -name "*.exe" -exec chmod +x {} +
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -42,8 +60,6 @@ build:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -52,8 +68,7 @@ build:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          # Usamos dist/* para que suba TODO lo que haya en la carpeta dist automáticamente
           files: dist/*
           body: |
             ## Weather App Release ${{ github.ref_name }}
-            Binarios generados para Windows, Linux y macOS.
+            Ejecutables generados para todos los sistemas operativos.
